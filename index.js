@@ -4,7 +4,7 @@ require('./style.css');
 class Biu {
   constructor(options = {}) {
     this.defaultQueue = options.defaultQueue || [];
-    this.minInterval = options.minInterval || 10000;
+    this.minInterval = options.minInterval || 1000;
     this.stopRandomRun = false;
     this.queue = options.queue || [];
     this.screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
@@ -22,11 +22,14 @@ class Biu {
     
     // use anime.js
     const width = dom.getBoundingClientRect().width;
-    anime({
+    const p = anime({
       targets: dom,
       left: -width,
-      duration: 10000,
-      easing: 'easeInOutQuad'
+      duration: 10000 * Math.random(),
+      easing: 'easeInOutQuad',
+      complete:()=>{
+        document.body.removeChild(dom)
+      }
     })
   }
 
@@ -57,4 +60,4 @@ class Biu {
 
 }
 window.Biu = Biu;
-module.exports = Biu;
+// module.exports = Biu;

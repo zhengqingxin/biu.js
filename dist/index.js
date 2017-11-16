@@ -65,99 +65,79 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_animejs__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_animejs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_animejs__);
 
+__webpack_require__(4);
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _animejs = __webpack_require__(1);
-
-var _animejs2 = _interopRequireDefault(_animejs);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-__webpack_require__(3);
-
-var Biu = function () {
-  function Biu() {
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    _classCallCheck(this, Biu);
-
+class Biu {
+  constructor(options = {}) {
     this.defaultQueue = options.defaultQueue || [];
-    this.minInterval = options.minInterval || 10000;
+    this.minInterval = options.minInterval || 1000;
     this.stopRandomRun = false;
     this.queue = options.queue || [];
     this.screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
   }
 
-  _createClass(Biu, [{
-    key: 'draw',
-    value: function draw(barrage) {
-      var dom = document.createElement('span');
-      dom.innerHTML = barrage.text;
-      dom.className = 'biu-text';
-      dom.style.top = (isNaN(barrage.top) ? barrage.top : barrage.top + 'px') || Math.random() * this.screenHeight + 'px';
-      document.body.append(dom);
+  draw(barrage) {
+    const dom = document.createElement('span');
+    dom.innerHTML = barrage.text;
+    dom.className = 'biu-text';
+    dom.style.top = (isNaN(barrage.top) ? barrage.top : barrage.top + 'px') || Math.random() * this.screenHeight + 'px';
+    document.body.append(dom);
 
-      // use css animation
-      // dom.className += ' go';
+    // use css animation
+    // dom.className += ' go';
 
-      // use anime.js
-      var width = dom.getBoundingClientRect().width;
-      (0, _animejs2.default)({
-        targets: dom,
-        left: -width,
-        duration: 10000,
-        easing: 'easeInOutQuad'
-      });
-    }
-  }, {
-    key: 'run',
-    value: function run() {
-      var _this = this;
-
-      // run default queue
-      if (this.defaultQueue.length > 0) {
-        this.setRandomInterval(function () {
-          _this.draw(_this.defaultQueue[Math.round(Math.random() * (_this.defaultQueue.length - 1))]);
-        }, this.minInterval);
+    // use anime.js
+    const width = dom.getBoundingClientRect().width;
+    const p = __WEBPACK_IMPORTED_MODULE_0_animejs___default()({
+      targets: dom,
+      left: -width,
+      duration: 10000 * Math.random(),
+      easing: 'easeInOutQuad',
+      complete: () => {
+        document.body.removeChild(dom);
       }
-    }
-  }, {
-    key: 'setRandomInterval',
-    value: function setRandomInterval(fn, minInterval) {
-      var _this2 = this;
+    });
+  }
 
-      var loop = function loop() {
-        if (_this2.stopRandomRun) return;
-        var interval = Math.round(Math.random() * minInterval);
-        setTimeout(function () {
-          fn();
-          loop();
-        }, interval);
-      };
-      loop();
+  run() {
+    // run default queue
+    if (this.defaultQueue.length > 0) {
+      this.setRandomInterval(() => {
+        this.draw(this.defaultQueue[Math.round(Math.random() * (this.defaultQueue.length - 1))]);
+      }, this.minInterval);
     }
-  }, {
-    key: 'clearRandomInterval',
-    value: function clearRandomInterval() {
-      this.stopRandomRun = true;
-    }
-  }]);
+  }
 
-  return Biu;
-}();
+  setRandomInterval(fn, minInterval) {
+    const loop = () => {
+      if (this.stopRandomRun) return;
+      const interval = Math.round(Math.random() * minInterval);
+      setTimeout(() => {
+        fn();
+        loop();
+      }, interval);
+    };
+    loop();
+  }
 
+  clearRandomInterval() {
+    this.stopRandomRun = true;
+  }
+
+}
 window.Biu = Biu;
-module.exports = Biu;
+// module.exports = Biu;
 
 /***/ }),
-/* 1 */
+/* 1 */,
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -196,10 +176,10 @@ n)k=l;else{var l=h,h=h+.1,g=0;do m=l+(h-l)/2,n=a(m,c,b)-k,0<n?h=m:l=m;while(1e-7
 d:A.apply($jscomp$this,d)}}(f)),f={type:f.type};return b}(),ha={css:function(a,c,d){return a.style[c]=d},attribute:function(a,c,d){return a.setAttribute(c,d)},object:function(a,c,d){return a[c]=d},transform:function(a,c,d,b,f){b[f]||(b[f]=[]);b[f].push(c+"("+d+")")}},v=[],B=0,ia=function(){function a(){B=requestAnimationFrame(c)}function c(c){var b=v.length;if(b){for(var d=0;d<b;)v[d]&&v[d].tick(c),d++;a()}else cancelAnimationFrame(B),B=0}return a}();q.version="2.2.0";q.speed=1;q.running=v;q.remove=
 function(a){a=P(a);for(var c=v.length;c--;)for(var d=v[c],b=d.animations,f=b.length;f--;)u(a,b[f].animatable.target)&&(b.splice(f,1),b.length||d.pause())};q.getValue=K;q.path=function(a,c){var d=h.str(a)?e(a)[0]:a,b=c||100;return function(a){return{el:d,property:a,totalLength:N(d)*(b/100)}}};q.setDashoffset=function(a){var c=N(a);a.setAttribute("stroke-dasharray",c);return c};q.bezier=A;q.easings=Q;q.timeline=function(a){var c=q(a);c.pause();c.duration=0;c.add=function(d){c.children.forEach(function(a){a.began=
 !0;a.completed=!0});m(d).forEach(function(b){var d=z(b,D(S,a||{}));d.targets=d.targets||a.targets;b=c.duration;var e=d.offset;d.autoplay=!1;d.direction=c.direction;d.offset=h.und(e)?b:L(e,b);c.began=!0;c.completed=!0;c.seek(d.offset);d=q(d);d.began=!0;d.completed=!0;d.duration>b&&(c.duration=d.duration);c.children.push(d)});c.seek(0);c.reset();c.autoplay&&c.restart();return c};return c};q.random=function(a,c){return Math.floor(Math.random()*(c-a+1))+a};return q});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports) {
 
 var g;
@@ -226,13 +206,13 @@ module.exports = g;
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(4);
+var content = __webpack_require__(5);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -240,7 +220,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(6)(content, options);
+var update = __webpack_require__(7)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -257,10 +237,10 @@ if(false) {
 }
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(undefined);
+exports = module.exports = __webpack_require__(6)(undefined);
 // imports
 
 
@@ -271,7 +251,7 @@ exports.push([module.i, ".biu-text {\n    position: absolute;\n    z-index: 100;
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 /*
@@ -353,7 +333,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -409,7 +389,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(7);
+var	fixUrls = __webpack_require__(8);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -725,7 +705,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 
