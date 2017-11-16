@@ -76,6 +76,8 @@ __webpack_require__(4);
 
 class Biu {
   constructor(options = {}) {
+    this.container = document.createElement('div');
+    this.container.className = 'biu-container';
     this.defaultQueue = options.defaultQueue || [];
     this.minInterval = options.minInterval || 1000;
     this.stopRandomRun = false;
@@ -88,7 +90,7 @@ class Biu {
     dom.innerHTML = barrage.text;
     dom.className = 'biu-text';
     dom.style.top = (isNaN(barrage.top) ? barrage.top : barrage.top + 'px') || Math.random() * this.screenHeight + 'px';
-    document.body.append(dom);
+    this.container.append(dom);
 
     // use css animation
     // dom.className += ' go';
@@ -101,12 +103,13 @@ class Biu {
       duration: 10000 * Math.random(),
       easing: 'easeInOutQuad',
       complete: () => {
-        document.body.removeChild(dom);
+        this.container.removeChild(dom);
       }
     });
   }
 
-  run() {
+  start() {
+    document.body.appendChild(this.container);
     // run default queue
     if (this.defaultQueue.length > 0) {
       this.setRandomInterval(() => {
@@ -115,7 +118,13 @@ class Biu {
     }
   }
 
+  stop() {
+    this.clearRandomInterval();
+    document.body.removeChild(this.container);
+  }
+
   setRandomInterval(fn, minInterval) {
+    this.stopRandomRun = false;
     const loop = () => {
       if (this.stopRandomRun) return;
       const interval = Math.round(Math.random() * minInterval);
@@ -245,7 +254,7 @@ exports = module.exports = __webpack_require__(6)(undefined);
 
 
 // module
-exports.push([module.i, ".biu-text {\n    position: absolute;\n    z-index: 100;\n    left: 100%;\n    white-space: nowrap;\n    color: red;\n    font-size: 200%;\n}\n\n.go {\n    animation: 14s go;\n    animation-fill-mode: forwards;\n    animation-timing-function: linear;\n}\n\n@keyframes go {\n    0% {\n        left: 100%;\n        opacity: 1;\n    }\n    70% {\n        opacity: 1;\n    }\n    100% {\n        left: -100%;\n        opacity: 0;\n    }\n}", ""]);
+exports.push([module.i, ".biu-text {\n    position: absolute;\n    z-index: 100;\n    left: 100%;\n    white-space: nowrap;\n    color: red;\n    font-size: 200%;\n}\n\n.biu-container {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    pointer-events: none;\n}\n\n.go {\n    animation: 14s go;\n    animation-fill-mode: forwards;\n    animation-timing-function: linear;\n}\n\n@keyframes go {\n    0% {\n        left: 100%;\n        opacity: 1;\n    }\n    70% {\n        opacity: 1;\n    }\n    100% {\n        left: -100%;\n        opacity: 0;\n    }\n}", ""]);
 
 // exports
 

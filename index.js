@@ -3,6 +3,8 @@ require('./style.css');
 
 class Biu {
   constructor(options = {}) {
+    this.container = document.createElement('div');
+    this.container.className = 'biu-container';
     this.defaultQueue = options.defaultQueue || [];
     this.minInterval = options.minInterval || 1000;
     this.stopRandomRun = false;
@@ -15,11 +17,11 @@ class Biu {
     dom.innerHTML = barrage.text;
     dom.className = 'biu-text';
     dom.style.top = (isNaN(barrage.top) ? barrage.top : barrage.top + 'px') || Math.random() * this.screenHeight + 'px';
-    document.body.append(dom);
-    
+    this.container.append(dom);
+
     // use css animation
     // dom.className += ' go';
-    
+
     // use anime.js
     const width = dom.getBoundingClientRect().width;
     const p = anime({
@@ -27,13 +29,14 @@ class Biu {
       left: -width,
       duration: 10000 * Math.random(),
       easing: 'easeInOutQuad',
-      complete:()=>{
-        document.body.removeChild(dom)
+      complete: () => {
+        this.container.removeChild(dom)
       }
     })
   }
 
-  run() {
+  start() {
+    document.body.appendChild(this.container);    
     // run default queue
     if (this.defaultQueue.length > 0) {
       this.setRandomInterval(() => {
@@ -42,7 +45,13 @@ class Biu {
     }
   }
 
+  stop(){
+    this.clearRandomInterval();
+    document.body.removeChild(this.container);
+  }
+
   setRandomInterval(fn, minInterval) {
+    this.stopRandomRun = false;
     const loop = () => {
       if (this.stopRandomRun) return;
       const interval = Math.round(Math.random() * minInterval);
