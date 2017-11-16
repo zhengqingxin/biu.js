@@ -1,0 +1,28 @@
+.biu-text {
+    position: absolute;
+    z-index: 100;
+    left: 100%;
+    white-space: nowrap;
+    color: red;
+    font-size: 200%;
+}
+
+.go {
+    animation: 14s go;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+}
+
+@keyframes go {
+    0% {
+        left: 100%;
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        left: -100%;
+        opacity: 0;
+    }
+}
