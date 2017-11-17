@@ -1,6 +1,5 @@
 .biu-text {
     position: absolute;
-    z-index: 100;
     left: 100%;
     white-space: nowrap;
     color: red;
@@ -9,6 +8,7 @@
 
 .biu-container {
     position: fixed;
+    z-index: 100;    
     top: 0;
     left: 0;
     width: 100%;

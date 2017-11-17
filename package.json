@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "animejs": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-preset-stage-0": "^6.24.1"
   }
 }

@@ -69,27 +69,33 @@
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_animejs__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_animejs__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_animejs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_animejs__);
 
-__webpack_require__(4);
+__webpack_require__(3);
 
 class Biu {
   constructor(options = {}) {
     this.container = document.createElement('div');
     this.container.className = 'biu-container';
     this.defaultQueue = options.defaultQueue || [];
-    this.minInterval = options.minInterval || 1000;
+    this.minInterval = options.minInterval || 2000;
     this.stopRandomRun = false;
     this.queue = options.queue || [];
     this.screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    this.colors = ['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c'];
   }
 
   draw(barrage) {
     const dom = document.createElement('span');
     dom.innerHTML = barrage.text;
     dom.className = 'biu-text';
-    dom.style.top = (isNaN(barrage.top) ? barrage.top : barrage.top + 'px') || Math.random() * this.screenHeight + 'px';
+
+    let style = {
+      top: Math.random() * this.screenHeight + 'px',
+      color: this.colors[Math.round(Math.random() * this.colors.length)]
+    };
+    Object.assign(dom.style, style, barrage.style);
     this.container.append(dom);
 
     // use css animation
@@ -145,8 +151,7 @@ window.Biu = Biu;
 // module.exports = Biu;
 
 /***/ }),
-/* 1 */,
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -185,10 +190,10 @@ n)k=l;else{var l=h,h=h+.1,g=0;do m=l+(h-l)/2,n=a(m,c,b)-k,0<n?h=m:l=m;while(1e-7
 d:A.apply($jscomp$this,d)}}(f)),f={type:f.type};return b}(),ha={css:function(a,c,d){return a.style[c]=d},attribute:function(a,c,d){return a.setAttribute(c,d)},object:function(a,c,d){return a[c]=d},transform:function(a,c,d,b,f){b[f]||(b[f]=[]);b[f].push(c+"("+d+")")}},v=[],B=0,ia=function(){function a(){B=requestAnimationFrame(c)}function c(c){var b=v.length;if(b){for(var d=0;d<b;)v[d]&&v[d].tick(c),d++;a()}else cancelAnimationFrame(B),B=0}return a}();q.version="2.2.0";q.speed=1;q.running=v;q.remove=
 function(a){a=P(a);for(var c=v.length;c--;)for(var d=v[c],b=d.animations,f=b.length;f--;)u(a,b[f].animatable.target)&&(b.splice(f,1),b.length||d.pause())};q.getValue=K;q.path=function(a,c){var d=h.str(a)?e(a)[0]:a,b=c||100;return function(a){return{el:d,property:a,totalLength:N(d)*(b/100)}}};q.setDashoffset=function(a){var c=N(a);a.setAttribute("stroke-dasharray",c);return c};q.bezier=A;q.easings=Q;q.timeline=function(a){var c=q(a);c.pause();c.duration=0;c.add=function(d){c.children.forEach(function(a){a.began=
 !0;a.completed=!0});m(d).forEach(function(b){var d=z(b,D(S,a||{}));d.targets=d.targets||a.targets;b=c.duration;var e=d.offset;d.autoplay=!1;d.direction=c.direction;d.offset=h.und(e)?b:L(e,b);c.began=!0;c.completed=!0;c.seek(d.offset);d=q(d);d.began=!0;d.completed=!0;d.duration>b&&(c.duration=d.duration);c.children.push(d)});c.seek(0);c.reset();c.autoplay&&c.restart();return c};return c};q.random=function(a,c){return Math.floor(Math.random()*(c-a+1))+a};return q});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports) {
 
 var g;
@@ -215,13 +220,13 @@ module.exports = g;
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(5);
+var content = __webpack_require__(4);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -229,7 +234,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(7)(content, options);
+var update = __webpack_require__(6)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -246,21 +251,21 @@ if(false) {
 }
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(6)(undefined);
+exports = module.exports = __webpack_require__(5)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, ".biu-text {\n    position: absolute;\n    z-index: 100;\n    left: 100%;\n    white-space: nowrap;\n    color: red;\n    font-size: 200%;\n}\n\n.biu-container {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    pointer-events: none;\n}\n\n.go {\n    animation: 14s go;\n    animation-fill-mode: forwards;\n    animation-timing-function: linear;\n}\n\n@keyframes go {\n    0% {\n        left: 100%;\n        opacity: 1;\n    }\n    70% {\n        opacity: 1;\n    }\n    100% {\n        left: -100%;\n        opacity: 0;\n    }\n}", ""]);
+exports.push([module.i, ".biu-text {\n    position: absolute;\n    left: 100%;\n    white-space: nowrap;\n    color: red;\n    font-size: 200%;\n}\n\n.biu-container {\n    position: fixed;\n    z-index: 100;    \n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    pointer-events: none;\n}\n\n.go {\n    animation: 14s go;\n    animation-fill-mode: forwards;\n    animation-timing-function: linear;\n}\n\n@keyframes go {\n    0% {\n        left: 100%;\n        opacity: 1;\n    }\n    70% {\n        opacity: 1;\n    }\n    100% {\n        left: -100%;\n        opacity: 0;\n    }\n}", ""]);
 
 // exports
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports) {
 
 /*
@@ -342,7 +347,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -398,7 +403,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(8);
+var	fixUrls = __webpack_require__(7);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -714,7 +719,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports) {
 
 
