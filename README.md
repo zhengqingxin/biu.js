@@ -1,1 +1,4 @@
-**Library for barrage.**🔫 
+
+## biu.js
+
+Library for barrage.🔫 
