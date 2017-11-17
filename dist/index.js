@@ -76,14 +76,17 @@ __webpack_require__(3);
 
 class Biu {
   constructor(options = {}) {
-    this.container = document.createElement('div');
-    this.container.className = 'biu-container';
     this.defaultQueue = options.defaultQueue || [];
-    this.minInterval = options.minInterval || 2000;
-    this.stopRandomRun = false;
+    this.minInterval = options.minInterval || 100;
+    this.duration = options.duration || 10000;
+    this.minDuration = options.minDuration || 5000;
     this.queue = options.queue || [];
+
+    this.stopRandomRun = false;
     this.screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     this.colors = ['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c'];
+    this.container = document.createElement('div');
+    this.container.className = 'biu-container';
   }
 
   draw(barrage) {
@@ -91,7 +94,7 @@ class Biu {
     dom.innerHTML = barrage.text;
     dom.className = 'biu-text';
 
-    let style = {
+    const style = {
       top: Math.random() * this.screenHeight + 'px',
       color: this.colors[Math.round(Math.random() * this.colors.length)]
     };
@@ -103,30 +106,16 @@ class Biu {
 
     // use anime.js
     const width = dom.getBoundingClientRect().width;
+    const duration = this.duration * Math.random();
     const p = __WEBPACK_IMPORTED_MODULE_0_animejs___default()({
       targets: dom,
       left: -width,
-      duration: 10000 * Math.random(),
+      duration: duration < this.minDuration ? this.minDuration : duration,
       easing: 'easeInOutQuad',
       complete: () => {
         this.container.removeChild(dom);
       }
     });
-  }
-
-  start() {
-    document.body.appendChild(this.container);
-    // run default queue
-    if (this.defaultQueue.length > 0) {
-      this.setRandomInterval(() => {
-        this.draw(this.defaultQueue[Math.round(Math.random() * (this.defaultQueue.length - 1))]);
-      }, this.minInterval);
-    }
-  }
-
-  stop() {
-    this.clearRandomInterval();
-    document.body.removeChild(this.container);
   }
 
   setRandomInterval(fn, minInterval) {
@@ -144,6 +133,31 @@ class Biu {
 
   clearRandomInterval() {
     this.stopRandomRun = true;
+  }
+
+  startDefaultQueue() {
+    if (this.defaultQueue.length > 0) {
+      this.setRandomInterval(() => {
+        this.draw(this.defaultQueue[Math.round(Math.random() * (this.defaultQueue.length - 1))]);
+      }, this.minInterval);
+    }
+  }
+
+  start() {
+    document.body.appendChild(this.container);
+    document.addEventListener("visibilitychange", this.pause);
+    this.startDefaultQueue();
+  }
+
+  pause() {
+    this.stopRandomRun = !this.stopRandomRun;
+    if (!this.stopRandomRun) this.startDefaultQueue();
+  }
+
+  stop() {
+    this.clearRandomInterval();
+    document.removeEventListener("visibilitychange", this.pause);
+    if (this.container) document.body.removeChild(this.container);
   }
 
 }
