@@ -78,7 +78,8 @@ class Biu {
 
   start() {
     document.body.appendChild(this.container);
-    document.addEventListener("visibilitychange", this.pause);
+    this.visibleChangeEvt = ()=>{this.pause()};
+    document.addEventListener("visibilitychange", this.visibleChangeEvt);
     this.startDefaultQueue();
   }
 
@@ -89,7 +90,7 @@ class Biu {
 
   stop() {
     this.clearRandomInterval();
-    document.removeEventListener("visibilitychange", this.pause);
+    document.removeEventListener("visibilitychange", this.visibleChangeEvt);
     if (this.container) document.body.removeChild(this.container);
   }
 
