@@ -4,10 +4,10 @@ require('./style.css');
 class Biu {
   constructor(options = {}) {
     this.defaultQueue = options.defaultQueue || [];
-    this.minInterval = options.minInterval || 100;
+    this.minInterval = options.minInterval || 2000;
     this.duration = options.duration || 10000;
     this.minDuration = options.minDuration || 5000;
-    this.queue = options.queue || [];
+    // this.queue = options.queue || [];
 
     this.stopRandomRun = false;
     this.screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
@@ -15,6 +15,11 @@ class Biu {
     this.container = document.createElement('div');
     this.container.className = 'biu-container';
 
+  }
+
+  push(barrage){
+    // this.queue.push(barrage);
+    this.draw(barrage);
   }
 
   draw(barrage) {
