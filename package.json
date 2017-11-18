@@ -4,14 +4,17 @@
   "description": "bullet screen js library",
   "main": "index.js",
   "scripts": {
-    "watch": "webpack -w"
+    "watch": "webpack -w",
+    "build": "webpack"
   },
   "author": "362965772@qq.com",
   "license": "ISC",
   "dependencies": {
-    "animejs": "^2.2.0"
+    "animejs": "^2.2.0",
+    "socket.io": "^2.0.4"
   },
   "devDependencies": {
-    "babel-preset-stage-0": "^6.24.1"
+    "babel-preset-stage-0": "^6.24.1",
+    "webpack-bundle-analyzer": "^2.9.1"
   }
 }

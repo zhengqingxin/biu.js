@@ -1,20 +1,34 @@
 import anime from 'animejs';
+import socket from 'socket.io-client/dist/socket.io.slim.js';
+import { setInterval } from 'timers';
 require('./style.css');
 
 class Biu {
   constructor(options = {}) {
+    this.socket = options.socket;
     this.defaultQueue = options.defaultQueue || [];
     this.minInterval = options.minInterval || 2000;
     this.duration = options.duration || 10000;
     this.minDuration = options.minDuration || 5000;
+    this.colors = options.colors || ['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c'] ;
+    
     // this.queue = options.queue || [];
 
     this.stopRandomRun = false;
     this.screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    this.colors = ['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c'];
     this.container = document.createElement('div');
     this.container.className = 'biu-container';
+    this.openWs(options.socket);
+  }
 
+  openWs(){
+    this.socket = socket(this.socket);
+    this.socket.on('connected', function(data) {
+      console.log('connected:', data);
+    });
+    this.socket.on('push', (data)=> {
+      this.push(data);
+    });
   }
 
   push(barrage){
@@ -25,7 +39,7 @@ class Biu {
   draw(barrage) {
     const dom = document.createElement('span');
     dom.innerHTML = barrage.text;
-    dom.className = 'biu-text';
+    dom.className = `biu-text`;
 
     const style = {
       top: Math.random() * this.screenHeight + 'px',
@@ -85,12 +99,18 @@ class Biu {
 
   pause() {
     this.stopRandomRun = !this.stopRandomRun;
-    if (!this.stopRandomRun) this.startDefaultQueue();
+    if (!this.stopRandomRun) {
+      this.startDefaultQueue();
+      this.openWs();
+    }else{
+      this.socket.disconnect();
+    }
   }
 
   stop() {
     this.clearRandomInterval();
     document.removeEventListener("visibilitychange", this.visibleChangeEvt);
+    if(this.socket) this.socket.disconnect();
     if (this.container) document.body.removeChild(this.container);
   }
 
