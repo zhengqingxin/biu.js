@@ -45,7 +45,7 @@ biu.start()
 ### instance option
 ```js
 {
-  socket:'https://localhost:8360', //websocket server address
+  socket:'https://localhost:8360', //websocket server address
   defaultQueue:[{text:'biu',style:{color:'red'}}]    //default barrage list
   defaultQueueInterval:2000,     // show default queue in an random interval based on this field, default 2000.
   duration:10000,    // barrage duration in the page. generate random value based on this field, default 10000.
