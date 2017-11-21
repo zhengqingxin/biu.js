@@ -7,7 +7,7 @@ class Biu {
   constructor(options = {}) {
     this.socket = options.socket;
     this.defaultQueue = options.defaultQueue || [];
-    this.minInterval = options.minInterval || 2000;
+    this.defaultQueueInterval = options.defaultQueueInterval || 2000;
     this.duration = options.duration || 10000;
     this.minDuration = options.minDuration || 5000;
     this.colors = options.colors || ['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c'] ;
@@ -77,11 +77,11 @@ class Biu {
     })
   }
 
-  setRandomInterval(fn, minInterval) {
+  setRandomInterval(fn, defaultQueueInterval) {
     this.stopRandomRun = false;
     const loop = () => {
       if (this.stopRandomRun) return;
-      const interval = Math.round(Math.random() * minInterval);
+      const interval = Math.round(Math.random() * defaultQueueInterval);
       setTimeout(() => {
         fn();
         loop();
@@ -98,7 +98,7 @@ class Biu {
     if (this.defaultQueue.length > 0) {
       this.setRandomInterval(() => {
         this.draw(this.defaultQueue[Math.round(Math.random() * (this.defaultQueue.length - 1))]);
-      }, this.minInterval)
+      }, this.defaultQueueInterval)
     }
   }
 
