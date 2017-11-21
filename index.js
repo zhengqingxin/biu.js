@@ -11,7 +11,7 @@ class Biu {
     this.duration = options.duration || 10000;
     this.minDuration = options.minDuration || 5000;
     this.colors = options.colors || ['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c'] ;
-    
+    this.onMessage = options.onMessage;
     // this.queue = options.queue || [];
 
     this.stopRandomRun = false;
@@ -31,12 +31,18 @@ class Biu {
     });
   }
 
+  send(msg){
+    this.socket.emit('message',msg);
+  }
+
   push(barrage){
     // this.queue.push(barrage);
     this.draw(barrage);
   }
 
   draw(barrage) {
+    if(!barrage.text) return;
+    if(this.onMessage) this.onMessage(barrage);
     const dom = document.createElement('span');
     dom.innerHTML = barrage.text;
     dom.className = `biu-text`;
@@ -44,6 +50,12 @@ class Biu {
     const style = {
       top: Math.random() * this.screenHeight + 'px',
       color: this.colors[Math.round(Math.random() * this.colors.length)]
+    }
+    if (typeof barrage.style === 'string'){
+      try{
+        barrage.style = JSON.parse(barrage.style);        
+      }catch(e){
+      }
     }
     Object.assign(dom.style, style, barrage.style);
     this.container.append(dom);
@@ -53,7 +65,7 @@ class Biu {
 
     // use anime.js
     const width = dom.getBoundingClientRect().width;
-    const duration = this.duration * Math.random();
+    const duration = barrage.duration || this.duration * Math.random();
     const p = anime({
       targets: dom,
       left: -width,
