@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["Biu"] = factory();
+	else
+		root["Biu"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -92,19 +102,14 @@ module.exports = g;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_animejs__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_animejs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_animejs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_socket_io_client_dist_socket_io_slim_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_socket_io_client_dist_socket_io_slim_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_socket_io_client_dist_socket_io_slim_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_timers__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_timers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_timers__);
-
-
-
+// import anime from 'animejs';
+// import socket from 'socket.io-client/dist/socket.io.slim.js';
+// import { setInterval } from 'timers';
+const anime = __webpack_require__(2);
+const socket = __webpack_require__(3);
+const { setInterval } = __webpack_require__(4);
 __webpack_require__(7);
 
 class Biu {
@@ -126,7 +131,7 @@ class Biu {
   }
 
   openWs() {
-    this.socket = __WEBPACK_IMPORTED_MODULE_1_socket_io_client_dist_socket_io_slim_js___default()(this.socket);
+    this.socket = socket(this.socket);
     this.socket.on('connected', function (data) {
       console.log('connected:', data);
     });
@@ -169,7 +174,7 @@ class Biu {
     // use anime.js
     const width = dom.getBoundingClientRect().width;
     const duration = barrage.duration || this.duration * Math.random();
-    const p = __WEBPACK_IMPORTED_MODULE_0_animejs___default()({
+    const p = anime({
       targets: dom,
       left: -width,
       duration: duration < this.minDuration ? this.minDuration : duration,
@@ -232,8 +237,9 @@ class Biu {
   }
 
 }
-window.Biu = Biu;
-// module.exports = Biu;
+
+// export default Biu;
+module.exports = Biu;
 
 /***/ }),
 /* 2 */
@@ -1323,3 +1329,4 @@ module.exports = function (css) {
 
 /***/ })
 /******/ ]);
+});

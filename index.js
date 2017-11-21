@@ -1,6 +1,9 @@
-import anime from 'animejs';
-import socket from 'socket.io-client/dist/socket.io.slim.js';
-import { setInterval } from 'timers';
+// import anime from 'animejs';
+// import socket from 'socket.io-client/dist/socket.io.slim.js';
+// import { setInterval } from 'timers';
+const anime = require('animejs')
+const socket = require('socket.io-client/dist/socket.io.slim.js')
+const {setInterval} = require('timers')
 require('./style.css');
 
 class Biu {
@@ -127,5 +130,6 @@ class Biu {
   }
 
 }
-window.Biu = Biu;
-// module.exports = Biu;
+
+// export default Biu;
+module.exports = Biu;
