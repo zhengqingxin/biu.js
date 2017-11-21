@@ -1,11 +1,12 @@
 const webpack = require('webpack');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   entry: './index.js',
   output: {
     path: __dirname + '/dist',
-    filename: 'index.js',
+    filename: 'biu.min.js',
     libraryTarget:'umd',
     library:'Biu'
   },
@@ -30,5 +31,8 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.json']
   },
-  plugins: [new BundleAnalyzerPlugin()]  
+  plugins: [
+    new UglifyJSPlugin(),
+    new BundleAnalyzerPlugin(),
+  ]  
 };
