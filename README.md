@@ -75,3 +75,26 @@ var barrage = {
 }
 biu.push(barrage);
 ```
+
+## Websocket
+There are two events you should know if you use your own server side project. By the way, I also provide a [server side project](https://github.com/zhengqingxin/biu) , you can use it directly if you want.
+
+* `message`: client will emit a `message` event to server. For example:
+```js
+  // client side
+  biu.send({text:'biu message'});
+
+  // server side
+  socket.on('message', function(data) {
+    socket.broadcast('push',data)
+  });
+
+```
+* `push`: server will broadcast a `push` event to clients. For example:
+
+```js
+  // server side
+  socket.emit('push', {text:'a message from server'});
+
+  // you needn't do anything on client side, biu will receive 'push' event and send the barrage.
+```
