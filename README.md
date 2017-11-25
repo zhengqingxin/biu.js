@@ -79,7 +79,7 @@ biu.push(barrage);
 ## Websocket
 There are two events you should know if you use your own server side project. By the way, I also provide a [server side project](https://github.com/zhengqingxin/biu) , you can use it directly if you want.
 
-* `message`: client will emit a `message` event to server. For example:
+* message: client will emit a `message` event to server. For example:
 ```js
   // client side
   biu.send({text:'biu message'});
@@ -90,7 +90,7 @@ There are two events you should know if you use your own server side project. By
   });
 
 ```
-* `push`: server will broadcast a `push` event to clients. For example:
+* push: server will broadcast a `push` event to clients. For example:
 
 ```js
   // server side

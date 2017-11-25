@@ -5,7 +5,8 @@ require('./style.css');
 
 class Biu {
   constructor(options = {}) {
-    this.socket = options.socket;
+    this.token = options.token;
+    this.socket = options.socket  + (this.token ? '/' + this.token :'');
     this.defaultQueue = options.defaultQueue || [];
     this.defaultQueueInterval = options.defaultQueueInterval || 2000;
     this.duration = options.duration || 10000;
@@ -22,17 +23,18 @@ class Biu {
   }
 
   openWs(){
-    this.socket = socket(this.socket);
-    this.socket.on('connected', function(data) {
+    this.ws = socket(this.socket);
+    
+    this.ws.on('connected', function(data) {
       console.log('connected:', data);
     });
-    this.socket.on('push', (data)=> {
+    this.ws.on('push', (data)=> {
       this.push(data);
     });
   }
 
   send(msg){
-    this.socket.emit('message',msg);
+    this.ws.emit('message',msg);
   }
 
   push(barrage){
@@ -115,14 +117,14 @@ class Biu {
       this.startDefaultQueue();
       this.openWs();
     }else{
-      this.socket.disconnect();
+      this.ws.disconnect();
     }
   }
 
   stop() {
     this.clearRandomInterval();
     document.removeEventListener("visibilitychange", this.visibleChangeEvt);
-    if(this.socket) this.socket.disconnect();
+    if(this.ws) this.ws.disconnect();
     if (this.container) document.body.removeChild(this.container);
   }
 
