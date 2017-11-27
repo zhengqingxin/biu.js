@@ -5,8 +5,8 @@ require('./style.css');
 
 class Biu {
   constructor(options = {}) {
-    this.token = options.token;
-    this.socket = options.socket  + (this.token ? '/' + this.token :'');
+    this.name = options.name;
+    this.socket = options.socket  + (this.name ? (options.socket.slice(-1) === '/' ? '' : '/') + this.name :'');
     this.defaultQueue = options.defaultQueue || [];
     this.defaultQueueInterval = options.defaultQueueInterval || 2000;
     this.duration = options.duration || 10000;
