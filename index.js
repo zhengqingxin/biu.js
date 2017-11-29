@@ -23,7 +23,8 @@ class Biu {
   }
 
   openWs(){
-    this.ws = socket(this.socket,{ 'transports': ['websocket'] });
+    this.ws = socket(this.socket,{ 'transports': ['websocket','polling'] });
+    // this.ws = socket(this.socket);
     
     this.ws.on('connected', function(data) {
       console.log('connected:', data);
