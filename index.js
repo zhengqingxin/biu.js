@@ -19,7 +19,6 @@ class Biu {
     this.screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     this.container = document.createElement('div');
     this.container.className = 'biu-container';
-    this.openWs(options.socket);
   }
 
   openWs(){
@@ -108,6 +107,7 @@ class Biu {
     document.body.appendChild(this.container);
     this.visibleChangeEvt = ()=>{this.pause()};
     document.addEventListener("visibilitychange", this.visibleChangeEvt);
+    this.openWs();
     this.startDefaultQueue();
   }
 
