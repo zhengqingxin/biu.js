@@ -1,6 +1,6 @@
 {
   "name": "biujs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "bullet screen js library",
   "main": "dist/biu.min.js",
   "scripts": {
