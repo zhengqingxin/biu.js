@@ -46,8 +46,9 @@ class Biu {
     if(this.onMessage) this.onMessage(barrage);
     const dom = document.createElement('span');
     dom.innerHTML = barrage.text;
-    dom.className = `biu-text`;
+    dom.className = `biu-text ` + (barrage.className || '');
 
+    // top and color will cover className attribute
     const style = {
       top: Math.random() * this.screenHeight + 'px',
       color: this.colors[Math.round(Math.random() * this.colors.length)]
