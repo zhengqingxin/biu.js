@@ -1,6 +1,5 @@
 const anime = require('animejs')
 const socket = require('socket.io-client/dist/socket.io.slim.js')
-const {setInterval} = require('timers')
 require('./style.css');
 
 class Biu {
