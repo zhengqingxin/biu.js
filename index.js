@@ -41,6 +41,7 @@ class Biu {
   }
 
   draw(barrage) {
+    if(typeof barrage === 'string') barrage = {text:barrage};
     if(!barrage.text) return;
     if(this.onMessage) this.onMessage(barrage);
     const dom = document.createElement('span');
