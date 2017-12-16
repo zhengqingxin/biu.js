@@ -13,6 +13,7 @@ class Biu {
     this.colors = options.colors || ['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c'] ;
     this.onMessage = options.onMessage;
     this.minTop = options.minTop || 0;
+    this.minBottom = options.minBottom || 0;
     // this.queue = options.queue || [];
 
     this.stopRandomRun = false;
