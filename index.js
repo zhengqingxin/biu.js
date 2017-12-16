@@ -12,10 +12,11 @@ class Biu {
     this.minDuration = options.minDuration || 5000;
     this.colors = options.colors || ['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c'] ;
     this.onMessage = options.onMessage;
+    this.minTop = options.minTop || 0;
     // this.queue = options.queue || [];
 
     this.stopRandomRun = false;
-    this.screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    this.screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - this.minTop;
     this.container = document.createElement('div');
     this.container.className = 'biu-container';
   }
@@ -50,7 +51,7 @@ class Biu {
 
     // top and color will cover className attribute
     const style = {
-      top: Math.random() * this.screenHeight + 'px',
+      top: (this.minTop + Math.random() * this.screenHeight) + 'px',
       color: this.colors[Math.round(Math.random() * this.colors.length)]
     }
     if (typeof barrage.style === 'string'){
