@@ -62,7 +62,7 @@ class Biu {
       }
     }
     Object.assign(dom.style, style, barrage.style);
-    this.container.append(dom);
+    this.container.appendChild(dom);
 
     // use css animation
     // dom.className += ' go';
