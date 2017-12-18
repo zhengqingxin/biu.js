@@ -17,21 +17,23 @@
 }
 
 .go {
-    animation: 14s go;
+    animation: 10s go;
     animation-fill-mode: forwards;
     animation-timing-function: linear;
 }
 
 @keyframes go {
     0% {
-        left: 100%;
+        /* left: 100%; */
+        transform: translateX(0);
         opacity: 1;
     }
     70% {
         opacity: 1;
     }
     100% {
-        left: -100%;
+        /* left: -100%; */
+        transform: translateX(calc(-100% - 100vw));        
         opacity: 0;
     }
 }

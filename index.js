@@ -62,23 +62,48 @@ class Biu {
       }
     }
     Object.assign(dom.style, style, barrage.style);
-    this.container.appendChild(dom);
+        // use css animation
+    dom.className += ' go';
 
-    // use css animation
-    // dom.className += ' go';
+    this.container.append(dom);
+
+    var transitionEnd = transitionEndEventName();    
+    dom.addEventListener('animationend', ()=>{
+      this.container.removeChild(dom);
+    }, false);
+    
 
     // use anime.js
-    const width = dom.getBoundingClientRect().width;
-    const duration = barrage.duration || this.duration * Math.random();
-    const p = anime({
-      targets: dom,
-      left: -width,
-      duration: duration < this.minDuration ? this.minDuration : duration,
-      easing: 'easeInOutQuad',
-      complete: () => {
-        this.container.removeChild(dom)
+    // const width = dom.getBoundingClientRect().width;
+    // const duration = barrage.duration || this.duration * Math.random();
+    // const p = anime({
+    //   targets: dom,
+    //   left: -width,
+    //   duration: duration < this.minDuration ? this.minDuration : duration,
+    //   easing: 'easeInOutQuad',
+    //   complete: () => {
+    //     this.container.removeChild(dom)
+    //   }
+    // })
+
+    function transitionEndEventName () {
+      var i,
+          undefined,
+          el = document.createElement('div'),
+          transitions = {
+              'transition':'transitionend',
+              'OTransition':'otransitionend',  // oTransitionEnd in very old Opera
+              'MozTransition':'transitionend',
+              'WebkitTransition':'webkitTransitionEnd'
+          };
+  
+      for (i in transitions) {
+          if (transitions.hasOwnProperty(i) && el.style[i] !== undefined) {
+              return transitions[i];
+          }
       }
-    })
+    }
+
   }
 
   setRandomInterval(fn, defaultQueueInterval) {
