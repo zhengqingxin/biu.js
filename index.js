@@ -12,12 +12,11 @@ class Biu {
     this.minDuration = options.minDuration || 8000;
     this.colors = options.colors || ['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c'] ;
     this.onMessage = options.onMessage;
-    this.minTop = options.minTop || 0;
-    this.minBottom = options.minBottom || 0;
     // this.queue = options.queue || [];
+    this.topStart = options.topStart || 0;
+    this.topEnd = options.topEnd || Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 
     this.stopRandomRun = false;
-    this.screenHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - this.minTop;
     this.container = document.createElement('div');
     this.container.className = 'biu-container';
   }
@@ -50,10 +49,13 @@ class Biu {
     dom.innerHTML = barrage.text;
     dom.className = `biu-text ` + (barrage.className || '');
     const duration = barrage.duration || this.duration * Math.random();
-
+    console.log(this.topStart)
+    console.log(this.topEnd)
+    
+    console.log((Math.floor(Math.random() * this.topEnd) + this.topStart));
     // top and color will cover className attribute
     const style = {
-      top: (this.minTop + Math.random() * this.screenHeight) + 'px',
+      top: (Math.floor(Math.random() * this.topEnd) + this.topStart) + 'px',
       color: this.colors[Math.round(Math.random() * this.colors.length)],
       'animation-duration':(duration < this.minDuration ? this.minDuration : duration)/1000 + 's',
     }
