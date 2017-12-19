@@ -9,7 +9,7 @@ class Biu {
     this.defaultQueue = options.defaultQueue || [];
     this.defaultQueueInterval = options.defaultQueueInterval || 2000;
     this.duration = options.duration || 10000;
-    this.minDuration = options.minDuration || 5000;
+    this.minDuration = options.minDuration || 10000;
     this.colors = options.colors || ['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c'] ;
     this.onMessage = options.onMessage;
     this.minTop = options.minTop || 0;
@@ -49,11 +49,13 @@ class Biu {
     const dom = document.createElement('span');
     dom.innerHTML = barrage.text;
     dom.className = `biu-text ` + (barrage.className || '');
+    const duration = barrage.duration || this.duration * Math.random();
 
     // top and color will cover className attribute
     const style = {
       top: (this.minTop + Math.random() * this.screenHeight) + 'px',
-      color: this.colors[Math.round(Math.random() * this.colors.length)]
+      color: this.colors[Math.round(Math.random() * this.colors.length)],
+      'animation-duration':(duration < this.minDuration ? this.minDuration : duration)/1000 + 's',
     }
     if (typeof barrage.style === 'string'){
       try{
@@ -62,7 +64,7 @@ class Biu {
       }
     }
     Object.assign(dom.style, style, barrage.style);
-        // use css animation
+    // use css animation
     dom.className += ' go';
 
     this.container.append(dom);
