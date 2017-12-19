@@ -8,8 +8,8 @@ class Biu {
     this.socket = options.socket  + (this.name ? (options.socket.slice(-1) === '/' ? '' : '/') + this.name :'');
     this.defaultQueue = options.defaultQueue || [];
     this.defaultQueueInterval = options.defaultQueueInterval || 2000;
-    this.duration = options.duration || 10000;
-    this.minDuration = options.minDuration || 10000;
+    this.duration = options.duration || 20000;
+    this.minDuration = options.minDuration || 8000;
     this.colors = options.colors || ['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c'] ;
     this.onMessage = options.onMessage;
     this.minTop = options.minTop || 0;
