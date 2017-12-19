@@ -134,6 +134,11 @@ class Biu {
   }
 
   start() {
+    if(this.container){
+      while (this.container.firstChild) {
+        this.container.removeChild(this.container.firstChild);
+      }
+    }
     document.body.appendChild(this.container);
     this.visibleChangeEvt = ()=>{this.pause()};
     document.addEventListener("visibilitychange", this.visibleChangeEvt);
