@@ -2,7 +2,7 @@
   "name": "biujs",
   "version": "0.0.12",
   "description": "bullet screen js library",
-  "main": "index.js",
+  "main": "dist/biu.min.js",
   "scripts": {
     "watch": "webpack -w",
     "build": "webpack"

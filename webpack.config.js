@@ -18,7 +18,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           query: {
-            presets:['stage-0']
+            presets: ['es2015']
           }
         }
       },
