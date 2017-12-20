@@ -1,5 +1,4 @@
-const anime = require('animejs')
-const socket = require('socket.io-client/dist/socket.io.slim.js')
+const socket = require('socket.io-client');
 require('./style.css');
 
 class Biu {
