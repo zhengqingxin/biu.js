@@ -1,5 +1,5 @@
 const socket = require('socket.io-client');
-// require('./style.css');
+require('./style.css');
 
 class Biu {
   constructor(options = {}) {
