@@ -49,10 +49,6 @@ class Biu {
     dom.innerHTML = barrage.text;
     dom.className = `biu-text ` + (barrage.className || '');
     const duration = barrage.duration || this.duration * Math.random();
-    console.log(this.topStart)
-    console.log(this.topEnd)
-    
-    console.log((Math.floor(Math.random() * this.topEnd) + this.topStart));
     // top and color will cover className attribute
     const style = {
       top: (Math.floor(Math.random() * this.topEnd) + this.topStart) + 'px',
