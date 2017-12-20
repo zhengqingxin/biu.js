@@ -32,7 +32,8 @@ module.exports = {
     extensions: ['.js', '.json']
   },
   plugins: [
-    new UglifyJSPlugin(),
-    new BundleAnalyzerPlugin(),
+    // new UglifyJSPlugin(),
+    // new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),    
+    // new BundleAnalyzerPlugin(),
   ]  
 };
