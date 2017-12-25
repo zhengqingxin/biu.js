@@ -45,7 +45,7 @@ class Biu {
     if(!barrage.text) return;
     if(this.onMessage) this.onMessage(barrage);
     const dom = document.createElement('span');
-    dom.innerHTML = barrage.text;
+    dom.textContent = barrage.text;
     dom.className = `biu-text ` + (barrage.className || '');
     const duration = barrage.duration || this.duration * Math.random();
     // top and color will cover className attribute
