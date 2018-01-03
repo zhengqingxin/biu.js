@@ -1,7 +1,7 @@
 
 # biu.js
 
-> biu.js is a JavaScript library for barrage.🔫 
+> 一个弹幕js.🔫 
 
 
 ## How to use
@@ -12,13 +12,14 @@
 <script src="biu.min.js"></script>
 ```
 ```js
-var options = {
-  defaultQueue:[
-    {text:"biu~biu~biu 一┳═┻︻▄ "}
-  ]
-}
-var biu = new Biu(options);
-biu.start();
+var anime = new Biu.anime();
+var biu = new Biu({
+  name: 'biubiu',
+  socket: location.protocol + '//' + location.hostname + (location.port ? ':'+location.port : '') ,
+  onMessage:(data)=>{
+    anime.run(data)
+  }
+});
 ```
 
 ### Using npm:
@@ -29,72 +30,51 @@ npm i --save biujs
 ```js
 import Biu from 'biujs';
 
-var options = {
-  defaultQueue:[
-    {text:"biu~biu~biu 一┳═┻︻▄ "}
-  ]
-}
-var biu = new Biu(options);
-biu.start()
+var anime = new Biu.anime();
+var biu = new Biu({
+  name: 'biubiu',
+  socket: location.protocol + '//' + location.hostname + (location.port ? ':'+location.port : '') ,
+  onMessage:(data)=>{
+    anime.run(data)
+  }
+});
 ```
 
+Biu 用来接收服务端消息，Biu.anime 是一个动画扩展，你可以直接使用，如果不满足你的需求，也可以在 `onMessage` 里自己写。
 
-## Options
+### Biu
 
-### instance option
-```js
-var options = {
-  socket:'https://localhost:8360', //websocket server address
-  defaultQueue:[{text:'biu',style:{color:'red'}}]    //default barrage list
-  defaultQueueInterval:2000,     // show default queue in an random interval based on this field, default 2000.
-  duration:10000,    // barrage duration in the page. generate random value based on this field, default 10000.
-  minDuration:5000,   //min duration,default 5000
-  colors:['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c'],  //text colors,barrage will pick a random color within them. default ['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c']
-  onMessage:()=>{}   // callback when a barrage is coming.
-}
-var biu = new Biu(options);
-biu.start();
-```
+#### 配置项
 
-### barrage option
-This options means then configuration of specific barrage, it can overwrite the options above. You can custom `text`,`style`,`duration`. For example:
+**name**：在[服务端](https://github.com/zhengqingxin/biu)申请的项目名称，实际对应 `socket.io` 中的一个 `namespace`
 
-```js
-var options = {
-  colors:['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c'],  
-  duration:10000,
-  minDuration:5000
-}
-var biu = new Biu(options);
-biu.start();
+**socket**：服务端地址
 
-var barrage = {
-  text:'boss barrage!'
-  style:{color:'red','font-size':'300%'},
-  duration:2000
-}
-biu.push(barrage);
-```
+**onConnect**：连接成功时的回调
 
-## Websocket
-There are two events you should know if you use your own server side project. By the way, I also provide a [server side project](https://github.com/zhengqingxin/biu) , you can use it directly if you want.
+**onMessage**：接收消息时的回调
 
-* message: client will emit a `message` event to server. For example:
-```js
-  // client side
-  biu.send({text:'biu message'});
+#### 方法
 
-  // server side
-  socket.on('message', function(data) {
-    socket.broadcast('push',data)
-  });
+**open**：连接ws，实例化时自动调用
 
-```
-* push: server will broadcast a `push` event to clients. For example:
+**stop**：关闭
 
-```js
-  // server side
-  socket.emit('push', {text:'a message from server'});
+**send**：发送消息，接收 string 或者 object 的参数，object时一定要有`text`字段（弹幕内容）
 
-  // you needn't do anything on client side, biu will receive 'push' event and send the barrage.
-```
+
+### Biu.anime
+
+**colors**：弹幕颜色，接收一个数组，默认值：['#f55b15', '#764ba5', '#00a762', '#0193e6', '#e0463c']
+
+**maxDuration**：弹幕最大时间
+
+**minDuration**：弹幕最小时间（每个弹幕会在最大最小时间中取一个随机值）
+
+#### 方法
+
+**run**：显示弹幕
+
+**show**：显示
+
+**hide**：隐藏
